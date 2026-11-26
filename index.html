@@ -26,21 +26,23 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+body{background:radial-gradient(1100px 620px at 12% -160px,rgba(201,138,75,.22),transparent 70%),radial-gradient(800px 700px at 110% 520px,rgba(160,90,40,.13),transparent 70%),radial-gradient(900px 600px at -10% 1500px,rgba(201,138,75,.10),transparent 70%),var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 body.travado{overflow:hidden}
-.wrap{max-width:920px;margin:0 auto;padding-block:20px 120px}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .9 0 0 0 0 .8 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:920px;margin:0 auto;padding-block:20px 130px}
 button{font:inherit;color:inherit}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .caps{font-family:var(--display);font-weight:600;letter-spacing:.32em;text-transform:uppercase}
 
 /* abertura */
-.hero{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:stretch;
-  border-radius:24px;overflow:hidden;background:var(--bg);border:1px solid var(--line);min-height:460px}
-.hero-txt{position:relative;z-index:2;display:grid;align-content:center;gap:18px;padding:28px 0 28px 26px}
-.hero-txt img{width:min(230px,100%);height:auto;display:block}
+.hero{position:relative;display:flex;align-items:center;border-radius:24px;overflow:hidden;background:rgba(14,11,9,.92);
+  border:1px solid var(--line);min-height:480px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.hero-txt{position:relative;z-index:2;display:grid;align-content:center;gap:18px;padding:32px 28px;width:min(470px,52%)}
+.hero-txt img{width:min(230px,62vw);height:auto;display:block}
 .slogan{margin:0;font-size:.74rem;line-height:2;color:var(--ink)}
 .slogan em{font-style:normal;color:var(--accent-hi)}
 .regua{height:1px;background:linear-gradient(90deg,var(--accent),transparent);width:80%}
@@ -55,15 +57,13 @@ a{color:inherit}
 .status.aberto{color:var(--ok)}
 .status small{color:var(--muted);font-weight:500}
 @keyframes pulsa{70%{box-shadow:0 0 0 9px rgba(143,203,126,0)}100%{box-shadow:0 0 0 0 rgba(143,203,126,0)}}
-.hero-foto{position:relative;min-height:100%}
+.hero-foto{position:absolute;top:0;right:0;bottom:0;width:60%;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 38%);mask-image:linear-gradient(90deg,transparent 0%,#000 38%)}
 .hero-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
-.hero-foto::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--bg) 0%,rgba(14,11,9,0) 45%)}
 @media (prefers-reduced-motion:no-preference){.hero-foto img{animation:zoom 18s ease-in-out infinite alternate}@keyframes zoom{to{transform:scale(1.08)}}}
 @media (max-width:560px){
-  .hero{grid-template-columns:1fr;min-height:0}
-  .hero-foto{order:-1;height:300px}
-  .hero-foto::before{background:linear-gradient(0deg,var(--bg) 0%,rgba(14,11,9,0) 55%)}
-  .hero-txt{padding:4px 20px 24px}
+  .hero{flex-direction:column;align-items:stretch;min-height:0}
+  .hero-foto{position:relative;order:-1;width:100%;height:290px;-webkit-mask-image:linear-gradient(0deg,transparent 0%,#000 40%);mask-image:linear-gradient(0deg,transparent 0%,#000 40%)}
+  .hero-txt{width:auto;padding:0 20px 26px;margin-top:-30px}
 }
 
 /* vapor */
@@ -83,19 +83,21 @@ section{padding-top:34px;scroll-margin-top:24px}
 h3.cat{font-family:var(--display);font-weight:600;font-size:1.25rem;margin:0;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
 .cat-desc{color:var(--muted);margin:0 0 14px;font-size:.92rem}
 .formato{font-size:.75rem;color:var(--accent-ink);background:var(--accent);padding:3px 10px;border-radius:999px;font-weight:600;letter-spacing:.04em}
-.grade{display:grid;gap:12px;grid-template-columns:1fr}
-@media (min-width:720px){.grade{grid-template-columns:1fr 1fr}}
-.card{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;text-align:left;width:100%;
-  background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:10px;cursor:pointer;transition:border-color .2s,transform .2s}
+.grade{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))}
+.card{display:flex;flex-direction:column;text-align:left;width:100%;min-width:0;overflow:hidden;
+  background:var(--surface);border:1px solid var(--line);border-radius:20px;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s}
+.card:hover{box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.grade.um{grid-template-columns:1fr}
+@media (min-width:640px){.grade.um .card{flex-direction:row}.grade.um .foto{width:46%;aspect-ratio:auto;min-height:260px}.grade.um .info{flex:1;align-content:center;padding:28px}.grade.um .nome{font-size:1.5rem}.grade.um .desc{font-size:1rem}}
 .card:hover{border-color:var(--accent)}
 .card:active{transform:scale(.985)}
-.foto{position:relative;aspect-ratio:1;max-width:100%;border-radius:14px;overflow:hidden;background:var(--surface-2)}
+.foto{position:relative;aspect-ratio:4/3;width:100%;max-width:100%;overflow:hidden;background:var(--surface-2);flex:none}
 .foto img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .6s ease}
 .card:hover .foto img{transform:scale(1.08)}
-.info{display:grid;gap:5px;min-width:0}
-.nome{font-family:var(--display);font-weight:600;font-size:1.08rem;line-height:1.25}
+.info{display:grid;gap:6px;min-width:0;padding:14px 16px 16px}
+.nome{font-family:var(--display);font-weight:600;font-size:1.15rem;line-height:1.25}
 .desc{color:var(--muted);font-size:.88rem;margin:0}
-.rodape-card{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:2px}
+.rodape-card{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-top:6px}
 .preco{font-family:var(--display);font-weight:700;font-size:.98rem;font-variant-numeric:tabular-nums;color:var(--accent-hi)}
 .preco.pendente{font-family:var(--body);font-weight:500;font-size:.74rem;white-space:nowrap;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:1px 7px}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}.card{animation:entra .5s ease both}@keyframes entra{from{transform:translateY(10px)}to{transform:none}}}
@@ -103,16 +105,11 @@ h3.cat{font-family:var(--display);font-weight:600;font-size:1.25rem;margin:0;let
 /* contato */
 .contato{margin-top:36px;display:grid;gap:14px;justify-items:center;text-align:center;border-top:1px solid var(--line);padding-top:26px}
 .contato .caps{font-size:.72rem;color:var(--accent)}
-.nums{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-.num{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 8px 8px 14px}
-.num a{text-decoration:none;font-family:var(--display);font-weight:600;font-variant-numeric:tabular-nums;user-select:all}
-.num a span{color:var(--muted);font-weight:500}
-.copiar{border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:5px 10px;font-size:.78rem;cursor:pointer}
 footer{margin-top:28px;color:var(--muted);font-size:.82rem;text-align:center}
 .peca{font-size:.78rem;color:var(--accent);margin-top:6px}
 
 /* faixa animada */
-.faixa{overflow:hidden;border-block:1px solid var(--line);background:var(--soft);margin:0 0 16px;border-radius:12px}
+.faixa{overflow:hidden;border:1px solid var(--line);background:var(--soft);margin:18px 0 4px;border-radius:12px}
 .faixa div{display:flex;gap:40px;width:max-content;padding:9px 0;font-family:var(--display);font-weight:600;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-hi);white-space:nowrap}
 .faixa b{color:var(--ink);font-weight:600}
 @media (prefers-reduced-motion:no-preference){.faixa div{animation:rola 26s linear infinite}@keyframes rola{to{transform:translateX(-50%)}}}
@@ -127,7 +124,7 @@ footer{margin-top:28px;color:var(--muted);font-size:.82rem;text-align:center}
 .ctas{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .ver{color:var(--ink);font-weight:600;font-size:.92rem;text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px}
 /* selo de destaque */
-.selo{position:absolute;left:6px;top:6px;z-index:1;background:var(--accent);color:var(--accent-ink);font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:6px}
+.selo{position:absolute;left:10px;top:10px;z-index:1;background:var(--accent);color:var(--accent-ink);font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:6px}
 @media (prefers-reduced-motion:no-preference){.selo{animation:balanca 2.4s ease-in-out infinite}@keyframes balanca{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg) scale(1.06)}}}
 .card.destaque{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 12px 34px rgba(201,138,75,.18)}
 /* botão flutuante */
@@ -194,7 +191,7 @@ footer{margin-top:28px;color:var(--muted);font-size:.82rem;text-align:center}
 <div class="wrap">
   <header class="hero">
     <div class="hero-txt">
-      <img src="logo-nice-cafe.png" alt="NICE CAFÉ" width="800" height="588">
+      <img src="logo-nice-cafe.png" alt="NICE CAFÉ" width="800" height="577">
       <p class="slogan caps">Sabor de verdade,<br>no conforto da <em>sua casa.</em></p>
       <div class="regua"></div>
       <div class="dlv">
@@ -218,8 +215,8 @@ footer{margin-top:28px;color:var(--muted);font-size:.82rem;text-align:center}
   <main id="cardapio"></main>
 
   <div class="contato">
-    <span class="caps">Peça pelo WhatsApp</span>
-    <div class="nums" id="nums"></div>
+    <span class="caps">Bateu a fome?</span>
+    <a class="cta" id="cta-zap-2" target="_blank" rel="noopener"></a>
     <span class="caps peca">Peça já o seu!</span>
   </div>
   <footer>Fotos dos pratos criadas para divulgação. Consulte a equipe sobre alergias e restrições.</footer>
@@ -308,7 +305,7 @@ main.innerHTML=CARDAPIO.map(c=>`
   <section id="${c.id}" aria-labelledby="t-${c.id}">
     <div class="cat-head"><h3 class="cat" id="t-${c.id}">${esc(c.nome)}</h3>${c.formato?`<span class="formato">${esc(c.formato)}</span>`:""}</div>
     ${c.descricao?`<p class="cat-desc">${esc(c.descricao)}</p>`:""}
-    <div class="grade">${c.pratos.map((p,i)=>`
+    <div class="grade${c.pratos.length===1?" um":""}">${c.pratos.map((p,i)=>`
       <div class="card${p.selo?" destaque":""}" role="button" tabindex="0" data-id="${p.id}" style="animation-delay:${i*70}ms" aria-label="Ver ${esc(p.nome)}">
         <div class="foto">${p.selo?`<span class="selo">${esc(p.selo)}</span>`:""}<img src="${esc(p.foto)}" alt="${esc(p.nome)}" loading="lazy"></div>
         <div class="info">
@@ -319,15 +316,6 @@ main.innerHTML=CARDAPIO.map(c=>`
       </div>`).join("")}
     </div>
   </section>`).join("");
-
-document.getElementById("nums").innerHTML=LOJA.whatsapp.map((w,i)=>`
-  <div class="num"><a href="${zapLink(w)}" target="_blank" rel="noopener">${fmtNum(w).replace(/^(\(\d+\))/,"<span>$1</span>")}</a>
-  <button class="copiar" type="button" data-copiar="${i}">Copiar</button></div>`).join("");
-document.getElementById("nums").addEventListener("click",async e=>{
-  const b=e.target.closest("[data-copiar]");if(!b)return;const w=LOJA.whatsapp[+b.dataset.copiar];
-  try{await navigator.clipboard.writeText(fmtNum(w));b.textContent="Copiado"}catch(err){const r=document.createRange();r.selectNodeContents(b.previousElementSibling);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selecionado"}
-  setTimeout(()=>b.textContent="Copiar",1800);
-});
 
 /* ---------- painel ---------- */
 const painel=document.getElementById("painel"),fundo=document.getElementById("fundo");let voltar=null;
@@ -367,7 +355,7 @@ function abrirPedido(){
     <div class="campo"><label for="obs">Observações (endereço, troco, sem cebola...)</label><textarea id="obs" rows="2">${esc(obs)}</textarea></div>
     ${LOJA.whatsapp.length<2?"":`<div class="escolha" role="radiogroup" aria-label="Enviar para">${LOJA.whatsapp.map((w,i)=>`<label><input type="radio" name="zap" value="${i}" ${i===numEscolhido?"checked":""}> ${fmtNum(w)}</label>`).join("")}</div>`}
     <a class="btn zap" id="enviar" target="_blank" rel="noopener">${ZAP_ICO} Enviar pedido pelo WhatsApp</a>
-    <p class="dica">O WhatsApp abre com a mensagem pronta. Se não abrir, chame o número acima e diga os itens do pedido.</p>
+    <p class="dica">O WhatsApp abre com a mensagem pronta. Se não abrir, toque de novo no botão.</p>
     <button class="limpar" type="button" id="limpar">Limpar pedido</button>`,()=>{
     const env=document.getElementById("enviar"),ta=document.getElementById("obs");
     const link=()=>{env.href=zapLink(LOJA.whatsapp[numEscolhido],textoPedido())};link();
@@ -382,6 +370,7 @@ main.addEventListener("keydown",e=>{const c=e.target.closest(".card");if(c&&e.ta
 document.getElementById("abrir-sel").onclick=abrirPedido;
 const SAUDACAO="Olá, NICE CAFÉ! Vim pelo cardápio digital e quero fazer um pedido.";
 const cta=document.getElementById("cta-zap");cta.href=zapLink(LOJA.whatsapp[0],SAUDACAO);cta.innerHTML=ZAP_ICO+"Peça agora no WhatsApp";
+const cta2=document.getElementById("cta-zap-2");cta2.href=cta.href;cta2.innerHTML=ZAP_ICO+"Pedir pelo WhatsApp";
 const fab=document.getElementById("fab");fab.href=cta.href;fab.innerHTML=ZAP_ICO;
 const itensFaixa=["🔥 Delivery <b>segunda, quarta e sexta</b>","Das <b>16h às 23h</b>","Macarrão no <b>pote de 500 g</b>","<b>Carbonara</b> · <b>Amatriciana</b> · <b>Alfredo</b> · <b>Biro Biro</b>","Peça pelo <b>WhatsApp</b>"];
 document.getElementById("faixa").innerHTML=[...itensFaixa,...itensFaixa].map(t=>`<span>${t}</span>`).join("");
