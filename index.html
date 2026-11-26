@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cardápio NICE CAFÉ · Delivery</title>
+<meta name="description" content="Cardápio do delivery do NICE CAFÉ: macarrão no pote de 500 g e Arroz Biro Biro. Peça pelo WhatsApp. Segundas, quartas e sextas, das 16h às 23h.">
+<meta name="theme-color" content="#0E0B09">
+<meta property="og:title" content="NICE CAFÉ · Delivery">
+<meta property="og:description" content="Sabor de verdade, no conforto da sua casa. Peça pelo WhatsApp.">
+<meta property="og:image" content="/destaque-carbonara.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: abertura com foto do prato à direita e informações do delivery à esquerda, como no flyer; depois os pratos em cartões; ficha do prato sobe de baixo; barra do pedido fixa no rodapé */
+:root{
+  --bg:#0E0B09; --surface:#1A1512; --surface-2:#241D18; --ink:#F3ECE0; --muted:#B5A898; --line:#2E2620;
+  --accent:#C98A4B; --accent-hi:#E0A867; --accent-ink:#1A0F05; --soft:#221A13; --ok:#8FCB7E; --zap:#25D366;
+  --display:"Montserrat", "Segoe UI", system-ui, sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+body.travado{overflow:hidden}
+.wrap{max-width:920px;margin:0 auto;padding-block:20px 120px}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.caps{font-family:var(--display);font-weight:600;letter-spacing:.32em;text-transform:uppercase}
+
+/* abertura */
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:stretch;
+  border-radius:24px;overflow:hidden;background:var(--bg);border:1px solid var(--line);min-height:460px}
+.hero-txt{position:relative;z-index:2;display:grid;align-content:center;gap:18px;padding:28px 0 28px 26px}
+.hero-txt img{width:min(230px,100%);height:auto;display:block}
+.slogan{margin:0;font-size:.74rem;line-height:2;color:var(--ink)}
+.slogan em{font-style:normal;color:var(--accent-hi)}
+.regua{height:1px;background:linear-gradient(90deg,var(--accent),transparent);width:80%}
+.dlv{display:grid;gap:4px}
+.dlv h2{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,6vw,2.4rem);line-height:1;letter-spacing:.02em}
+.dlv p{margin:0;font-size:.72rem;color:var(--muted)}
+.hora{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--accent);border-radius:999px;padding:7px 14px;width:max-content;max-width:100%;
+  font-family:var(--display);font-weight:600;font-size:.8rem;letter-spacing:.12em;color:var(--accent-hi)}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;font-weight:600}
+.status i{width:9px;height:9px;border-radius:50%;background:var(--muted)}
+.status.aberto i{background:var(--ok);box-shadow:0 0 0 0 rgba(143,203,126,.6);animation:pulsa 2s infinite}
+.status.aberto{color:var(--ok)}
+.status small{color:var(--muted);font-weight:500}
+@keyframes pulsa{70%{box-shadow:0 0 0 9px rgba(143,203,126,0)}100%{box-shadow:0 0 0 0 rgba(143,203,126,0)}}
+.hero-foto{position:relative;min-height:100%}
+.hero-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-foto::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--bg) 0%,rgba(14,11,9,0) 45%)}
+@media (prefers-reduced-motion:no-preference){.hero-foto img{animation:zoom 18s ease-in-out infinite alternate}@keyframes zoom{to{transform:scale(1.08)}}}
+@media (max-width:560px){
+  .hero{grid-template-columns:1fr;min-height:0}
+  .hero-foto{order:-1;height:300px}
+  .hero-foto::before{background:linear-gradient(0deg,var(--bg) 0%,rgba(14,11,9,0) 55%)}
+  .hero-txt{padding:0 20px 24px;margin-top:-40px}
+}
+
+/* vapor */
+.vapor{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.vapor span{position:absolute;bottom:35%;width:60px;height:140px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,250,240,.22),rgba(255,250,240,0));filter:blur(8px);opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .vapor span{animation:sobeVapor 5s ease-in infinite}
+  .vapor span:nth-child(2){animation-delay:1.6s}
+  .vapor span:nth-child(3){animation-delay:3.2s}
+  @keyframes sobeVapor{0%{transform:translate(0,40px) scale(.6);opacity:0}25%{opacity:1}100%{transform:translate(18px,-160px) scale(1.4);opacity:0}}
+}
+
+/* pratos */
+section{padding-top:34px;scroll-margin-top:24px}
+.cat-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+h3.cat{font-family:var(--display);font-weight:600;font-size:1.25rem;margin:0;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.cat-desc{color:var(--muted);margin:0 0 14px;font-size:.92rem}
+.formato{font-size:.75rem;color:var(--accent-ink);background:var(--accent);padding:3px 10px;border-radius:999px;font-weight:600;letter-spacing:.04em}
+.grade{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:720px){.grade{grid-template-columns:1fr 1fr}}
+.card{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;text-align:left;width:100%;
+  background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:10px;cursor:pointer;transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--accent)}
+.card:active{transform:scale(.985)}
+.foto{position:relative;aspect-ratio:1;max-width:100%;border-radius:14px;overflow:hidden;background:var(--surface-2)}
+.foto img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .6s ease}
+.card:hover .foto img{transform:scale(1.08)}
+.info{display:grid;gap:5px;min-width:0}
+.nome{font-family:var(--display);font-weight:600;font-size:1.08rem;line-height:1.25}
+.desc{color:var(--muted);font-size:.88rem;margin:0}
+.rodape-card{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:2px}
+.preco{font-family:var(--display);font-weight:700;font-size:.98rem;font-variant-numeric:tabular-nums;color:var(--accent-hi)}
+.preco.pendente{font-family:var(--body);font-weight:500;font-size:.8rem;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:1px 7px}
+.mais{flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--accent);background:transparent;color:var(--accent);
+  font-size:1.3rem;line-height:1;display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
+.mais:hover{background:var(--accent);color:var(--accent-ink)}
+.mais.tem{background:var(--accent);color:var(--accent-ink);font-size:.92rem;font-weight:700}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}.card{animation:entra .5s ease both}@keyframes entra{from{transform:translateY(10px)}to{transform:none}}}
+
+/* contato */
+.contato{margin-top:36px;display:grid;gap:14px;justify-items:center;text-align:center;border-top:1px solid var(--line);padding-top:26px}
+.contato .caps{font-size:.72rem;color:var(--accent)}
+.nums{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.num{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 8px 8px 14px}
+.num a{text-decoration:none;font-family:var(--display);font-weight:600;font-variant-numeric:tabular-nums;user-select:all}
+.num a span{color:var(--muted);font-weight:500}
+.copiar{border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:5px 10px;font-size:.78rem;cursor:pointer}
+footer{margin-top:28px;color:var(--muted);font-size:.82rem;text-align:center}
+.peca{font-size:.78rem;color:var(--accent);margin-top:6px}
+
+/* barra do pedido */
+.barra{position:fixed;left:0;right:0;bottom:0;z-index:20;
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  background:linear-gradient(to top,var(--bg) 70%,transparent)}
+.barra button{width:100%;max-width:640px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  background:var(--accent);color:var(--accent-ink);border:0;border-radius:14px;padding:14px 18px;font-weight:600;cursor:pointer;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+
+/* painel */
+.fundo{position:fixed;inset:0;z-index:30;background:rgba(5,4,3,.72);backdrop-filter:blur(3px)}
+.painel{position:fixed;left:0;right:0;bottom:0;z-index:31;max-height:92vh;overflow-y:auto;
+  background:var(--surface);border-top:1px solid var(--line);border-radius:22px 22px 0 0;
+  padding:12px max(18px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px))}
+@media (min-width:720px){.painel{left:50%;right:auto;width:560px;transform:translateX(-50%);bottom:24px;border-radius:22px;border:1px solid var(--line)}}
+@media (prefers-reduced-motion:no-preference){.painel{animation:painel .32s cubic-bezier(.2,.8,.2,1)}@keyframes painel{from{translate:0 40px}to{translate:0 0}}}
+.alca{width:44px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 12px}
+.fechar{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:rgba(14,11,9,.7);cursor:pointer;font-size:1.05rem;z-index:3}
+.midia{position:relative;margin:0 -18px 16px;aspect-ratio:4/3;max-height:52vh;overflow:hidden;background:var(--surface-2)}
+@media (min-width:720px){.midia{margin:-12px -18px 16px;border-radius:22px 22px 0 0}}
+.midia img,.midia video{width:100%;height:100%;object-fit:cover;display:block}
+@media (prefers-reduced-motion:no-preference){.midia img{animation:aproxima 9s ease-out both}@keyframes aproxima{from{transform:scale(1.12)}to{transform:scale(1)}}}
+.midia::after{content:"";position:absolute;inset:auto 0 0;height:40%;background:linear-gradient(0deg,var(--surface),transparent)}
+.p-nome{font-family:var(--display);font-weight:700;font-size:1.4rem;margin:0 0 4px;text-wrap:balance}
+.p-desc{color:var(--muted);margin:0 0 12px}
+.fatos{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:.86rem;margin-bottom:16px;align-items:center}
+.fatos b{color:var(--ink);font-weight:600}
+.acao{display:flex;gap:12px;align-items:center}
+.qtd{display:flex;align-items:center;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.qtd button{width:42px;height:46px;background:var(--surface-2);border:0;cursor:pointer;font-size:1.2rem}
+.qtd output{min-width:36px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.btn{flex:1;background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;min-height:48px;font-weight:600;cursor:pointer;
+  display:flex;justify-content:center;align-items:center;gap:10px;padding:0 16px;text-decoration:none}
+.btn.zap{background:var(--zap);color:#062A12}
+.btn svg{width:20px;height:20px;fill:currentColor}
+.lista{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:10px}
+.lista li{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center}
+.lista .mini{width:52px;height:52px;border-radius:10px;object-fit:cover;display:block}
+.lista .n{font-weight:600;font-size:.95rem;min-width:0}
+.lista .v{color:var(--muted);font-size:.82rem}
+.lista .qtd button{width:34px;height:36px}
+.campo{display:grid;gap:6px;margin-bottom:14px}
+.campo label{font-size:.82rem;color:var(--muted)}
+.campo textarea{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;color:var(--ink);font:inherit;font-size:.92rem;padding:10px 12px;resize:vertical;min-height:64px}
+.escolha{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.escolha label{flex:1;min-width:150px;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;font-size:.9rem;font-variant-numeric:tabular-nums}
+.escolha input{accent-color:var(--accent)}
+.dica{color:var(--muted);font-size:.84rem;margin:10px 0 0}
+.limpar{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;padding:6px 0}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-txt">
+      <img src="logo-nice-cafe.png" alt="NICE CAFÉ" width="800" height="588">
+      <p class="slogan caps">Sabor de verdade,<br>no conforto da <em>sua casa.</em></p>
+      <div class="regua"></div>
+      <div class="dlv">
+        <h2>DELIVERY</h2>
+        <p class="caps">Segundas, quartas e sextas</p>
+      </div>
+      <span class="hora">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        DAS 16H ÀS 23H
+      </span>
+      <span class="status" id="status"><i></i><span id="status-txt">Confira o horário</span></span>
+    </div>
+    <div class="hero-foto">
+      <img src="destaque-carbonara.jpg" alt="Garfo enrolando macarrão carbonara com bacon crocante">
+      <div class="vapor" aria-hidden="true"><span style="left:30%"></span><span style="left:48%"></span><span style="left:62%"></span></div>
+    </div>
+  </header>
+
+  <main id="cardapio"></main>
+
+  <div class="contato">
+    <span class="caps">Peça pelo WhatsApp</span>
+    <div class="nums" id="nums"></div>
+    <span class="caps peca">Peça já o seu!</span>
+  </div>
+  <footer>Fotos dos pratos criadas para divulgação. Consulte a equipe sobre alergias e restrições.</footer>
+</div>
+
+<div class="barra" id="barra" hidden><button id="abrir-sel" type="button"><span id="sel-itens">0 itens</span><span>Ver pedido e enviar</span></button></div>
+<div class="fundo" id="fundo" hidden></div>
+<div class="painel" id="painel" role="dialog" aria-modal="true" aria-labelledby="painel-titulo" hidden></div>
+
+<script>
+/*
+  COMO EDITAR O CARDÁPIO
+  - Preço: troque  preco: null  por um número, por exemplo  preco: 29.90
+  - Novo prato: copie um bloco { id, nome, desc, preco, foto } dentro da categoria.
+  - Nova categoria: copie um bloco { id, nome, descricao, formato, pratos: [...] } e cole no fim da lista.
+  - Vídeo: coloque  video: "arquivo.mp4"  no prato; ele aparece na ficha do prato.
+*/
+const LOJA = {
+  whatsapp: [ { ddd:"34", numero:"992092865" } ],
+  dias: [1,3,5],            // 0 = domingo, 1 = segunda ... 6 = sábado
+  abre: 16, fecha: 23,      // horas
+  fuso: "America/Sao_Paulo"
+};
+const CARDAPIO = [
+  {
+    id:"macarrao", nome:"Macarrão", formato:"Pote de 500 g", descricao:"Massa feita na hora, servida no pote de 500 g.",
+    pratos:[
+      { id:"carbonara",   nome:"Carbonara",        desc:"Massa com bacon crocante, gema, parmesão e pimenta-do-reino.", preco:null, foto:"prato-carbonara.jpg" },
+      { id:"amatriciana", nome:"All'Amatriciana",  desc:"Molho de tomate com bacon, cebola, um toque de pimenta e queijo ralado.", preco:null, foto:"prato-amatriciana.jpg" },
+      { id:"alfredo",     nome:"Alfredo",          desc:"Molho branco cremoso de manteiga, creme de leite e parmesão.", preco:null, foto:"prato-alfredo.jpg" }
+    ]
+  },
+  {
+    id:"arroz", nome:"Arroz", descricao:"Arroz para matar a fome de verdade.",
+    pratos:[
+      { id:"biro-biro", nome:"Arroz Biro Biro", desc:"Arroz com bacon, ovos, cebola, batata palha e cheiro-verde.", preco:null, foto:"prato-biro-biro.jpg" }
+    ]
+  }
+];
+
+/* ---------- utilidades ---------- */
+const brl=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PRATOS={};CARDAPIO.forEach(c=>c.pratos.forEach(p=>{p.cat=c;PRATOS[p.id]=p}));
+const precoHTML=p=>p.preco!=null?`<span class="preco">${brl(p.preco)}</span>`:`<span class="preco pendente">Preço a confirmar</span>`;
+const fmtNum=w=>`(${w.ddd}) ${w.numero[0]} ${w.numero.slice(1,5)}-${w.numero.slice(5)}`;
+const zapLink=(w,txt)=>`https://wa.me/55${w.ddd}${w.numero}${txt?"?text="+encodeURIComponent(txt):""}`;
+const ZAP_ICO=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>`;
+
+/* ---------- aberto ou fechado ---------- */
+(function(){
+  try{
+    const partes=new Intl.DateTimeFormat("en-US",{timeZone:LOJA.fuso,weekday:"short",hour:"numeric",hour12:false}).formatToParts(new Date());
+    const dia=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(partes.find(x=>x.type==="weekday").value);
+    const hora=parseInt(partes.find(x=>x.type==="hour").value,10)%24;
+    const nomes=["domingo","segunda","terça","quarta","quinta","sexta","sábado"];
+    const el=document.getElementById("status"),t=document.getElementById("status-txt");
+    if(LOJA.dias.includes(dia)&&hora>=LOJA.abre&&hora<LOJA.fecha){el.classList.add("aberto");t.innerHTML=`Aberto agora <small>até ${LOJA.fecha}h</small>`;return}
+    let d=dia,hoje=true;for(let i=0;i<8;i++){if(LOJA.dias.includes(d)&&(!hoje||hora<LOJA.abre))break;d=(d+1)%7;hoje=false}
+    t.innerHTML=`Fechado agora <small>· abre ${d===dia&&hora<LOJA.abre?"hoje":nomes[d]} às ${LOJA.abre}h</small>`;
+  }catch(e){}
+})();
+
+/* ---------- seleção (fica só neste aparelho) ---------- */
+let sel={};try{sel=JSON.parse(localStorage.getItem("nice-pedido")||"{}")||{}}catch(e){sel={}}
+Object.keys(sel).forEach(k=>{if(!PRATOS[k])delete sel[k]});
+let obs="";try{obs=localStorage.getItem("nice-obs")||""}catch(e){}
+function salvar(){try{localStorage.setItem("nice-pedido",JSON.stringify(sel));localStorage.setItem("nice-obs",obs)}catch(e){}}
+function mudar(id,d){sel[id]=Math.max(0,(sel[id]||0)+d);if(!sel[id])delete sel[id];salvar();atualizar()}
+function atualizar(){
+  const qt=Object.values(sel).reduce((a,b)=>a+b,0);
+  document.getElementById("barra").hidden=!qt;
+  document.getElementById("sel-itens").textContent=qt+(qt===1?" item":" itens");
+  document.querySelectorAll(".mais").forEach(b=>{const n=sel[b.dataset.id]||0;b.classList.toggle("tem",!!n);b.textContent=n||"+";b.setAttribute("aria-label",n?`${n} no pedido, adicionar mais um`:"Adicionar ao pedido")});
+}
+function textoPedido(){
+  const linhas=Object.keys(sel).map(k=>{const p=PRATOS[k];return`• ${sel[k]}x ${p.cat.formato?p.nome+" ("+p.cat.formato.toLowerCase()+")":p.nome}`});
+  return`Olá, NICE CAFÉ! Quero fazer um pedido:\n${linhas.join("\n")}${obs.trim()?`\n\nObservações: ${obs.trim()}`:""}`;
+}
+
+/* ---------- montar ---------- */
+const main=document.getElementById("cardapio");
+main.innerHTML=CARDAPIO.map(c=>`
+  <section id="${c.id}" aria-labelledby="t-${c.id}">
+    <div class="cat-head"><h3 class="cat" id="t-${c.id}">${esc(c.nome)}</h3>${c.formato?`<span class="formato">${esc(c.formato)}</span>`:""}</div>
+    ${c.descricao?`<p class="cat-desc">${esc(c.descricao)}</p>`:""}
+    <div class="grade">${c.pratos.map((p,i)=>`
+      <div class="card" role="button" tabindex="0" data-id="${p.id}" style="animation-delay:${i*70}ms" aria-label="Ver ${esc(p.nome)}">
+        <div class="foto"><img src="${esc(p.foto)}" alt="${esc(p.nome)}" loading="lazy"></div>
+        <div class="info">
+          <span class="nome">${esc(p.nome)}</span>
+          <p class="desc">${esc(p.desc)}</p>
+          <div class="rodape-card">${precoHTML(p)}<button class="mais" data-id="${p.id}" type="button">+</button></div>
+        </div>
+      </div>`).join("")}
+    </div>
+  </section>`).join("");
+
+document.getElementById("nums").innerHTML=LOJA.whatsapp.map((w,i)=>`
+  <div class="num"><a href="${zapLink(w)}" target="_blank" rel="noopener">${fmtNum(w).replace(/^(\(\d+\))/,"<span>$1</span>")}</a>
+  <button class="copiar" type="button" data-copiar="${i}">Copiar</button></div>`).join("");
+document.getElementById("nums").addEventListener("click",async e=>{
+  const b=e.target.closest("[data-copiar]");if(!b)return;const w=LOJA.whatsapp[+b.dataset.copiar];
+  try{await navigator.clipboard.writeText(fmtNum(w));b.textContent="Copiado"}catch(err){const r=document.createRange();r.selectNodeContents(b.previousElementSibling);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selecionado"}
+  setTimeout(()=>b.textContent="Copiar",1800);
+});
+
+/* ---------- painel ---------- */
+const painel=document.getElementById("painel"),fundo=document.getElementById("fundo");let voltar=null;
+function abrir(html,depois){voltar=document.activeElement;painel.innerHTML=`<button class="fechar" type="button" aria-label="Fechar">✕</button>`+html;
+  painel.hidden=false;fundo.hidden=false;document.body.classList.add("travado");painel.querySelector(".fechar").onclick=fechar;depois&&depois();painel.scrollTop=0;painel.querySelector(".fechar").focus()}
+function fechar(){painel.hidden=true;fundo.hidden=true;document.body.classList.remove("travado");painel.innerHTML="";voltar&&voltar.focus&&voltar.focus()}
+fundo.onclick=fechar;document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!painel.hidden)fechar()});
+
+function abrirPrato(id){
+  const p=PRATOS[id];let q=1;
+  abrir(`
+    <div class="midia"><img src="${esc(p.foto)}" alt="${esc(p.nome)}"><div class="vapor" aria-hidden="true"><span style="left:40%"></span><span style="left:55%"></span><span style="left:68%"></span></div></div>
+    ${p.video?`<div class="midia"><video src="${esc(p.video)}" controls playsinline muted loop preload="metadata"></video></div>`:""}
+    <h3 class="p-nome" id="painel-titulo">${esc(p.nome)}</h3>
+    <p class="p-desc">${esc(p.desc)}</p>
+    <div class="fatos">${p.cat.formato?`<span>Tamanho <b>${esc(p.cat.formato)}</b></span>`:""}${precoHTML(p)}</div>
+    <div class="acao">
+      <div class="qtd"><button type="button" id="q-menos" aria-label="Menos um">−</button><output id="q-n">1</output><button type="button" id="q-mais" aria-label="Mais um">+</button></div>
+      <button class="btn" type="button" id="q-add">Adicionar ao pedido</button>
+    </div>`,()=>{
+    const n=document.getElementById("q-n");
+    document.getElementById("q-menos").onclick=()=>{q=Math.max(1,q-1);n.textContent=q};
+    document.getElementById("q-mais").onclick=()=>{q++;n.textContent=q};
+    document.getElementById("q-add").onclick=()=>{mudar(id,q);abrirPedido()};
+  });
+}
+let numEscolhido=0;
+function abrirPedido(){
+  const ids=Object.keys(sel);if(!ids.length){fechar();return}
+  abrir(`
+    <div class="alca"></div>
+    <h3 class="p-nome" id="painel-titulo">Seu pedido</h3>
+    <ul class="lista">${ids.map(k=>{const p=PRATOS[k];return`<li>
+      <img class="mini" src="${esc(p.foto)}" alt="">
+      <div><div class="n">${esc(p.nome)}</div><div class="v">${p.cat.formato?esc(p.cat.formato):""}</div></div>
+      <div class="qtd"><button type="button" data-d="-1" data-k="${k}" aria-label="Tirar um">−</button><output>${sel[k]}</output><button type="button" data-d="1" data-k="${k}" aria-label="Mais um">+</button></div></li>`}).join("")}</ul>
+    <div class="campo"><label for="obs">Observações (endereço, troco, sem cebola...)</label><textarea id="obs" rows="2">${esc(obs)}</textarea></div>
+    ${LOJA.whatsapp.length<2?"":`<div class="escolha" role="radiogroup" aria-label="Enviar para">${LOJA.whatsapp.map((w,i)=>`<label><input type="radio" name="zap" value="${i}" ${i===numEscolhido?"checked":""}> ${fmtNum(w)}</label>`).join("")}</div>`}
+    <a class="btn zap" id="enviar" target="_blank" rel="noopener">${ZAP_ICO} Enviar pedido pelo WhatsApp</a>
+    <p class="dica">O WhatsApp abre com a mensagem pronta. Se não abrir, chame o número acima e diga os itens do pedido.</p>
+    <button class="limpar" type="button" id="limpar">Limpar pedido</button>`,()=>{
+    const env=document.getElementById("enviar"),ta=document.getElementById("obs");
+    const link=()=>{env.href=zapLink(LOJA.whatsapp[numEscolhido],textoPedido())};link();
+    ta.oninput=()=>{obs=ta.value;salvar();link()};
+    painel.querySelectorAll('input[name="zap"]').forEach(r=>r.onchange=()=>{numEscolhido=+r.value;link()});
+    painel.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{mudar(b.dataset.k,+b.dataset.d);abrirPedido()});
+    document.getElementById("limpar").onclick=()=>{sel={};obs="";salvar();atualizar();fechar()};
+  });
+}
+main.addEventListener("click",e=>{const m=e.target.closest(".mais");if(m){e.stopPropagation();mudar(m.dataset.id,1);return}const c=e.target.closest(".card");if(c)abrirPrato(c.dataset.id)});
+main.addEventListener("keydown",e=>{const c=e.target.closest(".card");if(c&&e.target===c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();abrirPrato(c.dataset.id)}});
+document.getElementById("abrir-sel").onclick=abrirPedido;
+atualizar();
+</script>
+
+</body>
+</html>
