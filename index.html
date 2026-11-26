@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cardápio NICE CAFÉ · Delivery</title>
 <meta name="description" content="Cardápio do delivery do NICE CAFÉ: macarrão no pote de 500 g e Arroz Biro Biro. Peça pelo WhatsApp. Segundas, quartas e sextas, das 16h às 23h.">
-<meta name="theme-color" content="#0E0B09">
+<meta name="theme-color" content="#120C08">
 <meta property="og:title" content="NICE CAFÉ · Delivery">
 <meta property="og:description" content="Sabor de verdade, no conforto da sua casa. Peça pelo WhatsApp.">
 <meta property="og:image" content="/destaque-carbonara.jpg">
@@ -20,13 +20,13 @@
 /* Layout: abertura com foto do prato à direita e informações do delivery à esquerda, como no flyer; depois os pratos em cartões; ficha do prato sobe de baixo; barra do pedido fixa no rodapé */
 :root{
   --bg:#0E0B09; --surface:#1A1512; --surface-2:#241D18; --ink:#F3ECE0; --muted:#B5A898; --line:#2E2620;
-  --accent:#C98A4B; --accent-hi:#E0A867; --accent-ink:#1A0F05; --soft:#221A13; --ok:#8FCB7E; --zap:#25D366;
+  --accent:#D08A42; --accent-hi:#F0A95C; --brasa:#E8692A; --accent-ink:#1A0F05; --soft:#221A13; --ok:#8FCB7E; --zap:#25D366;
   --display:"Montserrat", "Segoe UI", system-ui, sans-serif;
   --body:"Figtree", "Segoe UI", system-ui, sans-serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-body{background:radial-gradient(1100px 620px at 12% -160px,rgba(201,138,75,.22),transparent 70%),radial-gradient(800px 700px at 110% 520px,rgba(160,90,40,.13),transparent 70%),radial-gradient(900px 600px at -10% 1500px,rgba(201,138,75,.10),transparent 70%),var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+body{background:radial-gradient(1100px 620px at 12% -160px,rgba(232,140,60,.26),transparent 70%),radial-gradient(800px 700px at 110% 520px,rgba(200,90,30,.16),transparent 70%),radial-gradient(900px 600px at -10% 1500px,rgba(232,120,50,.13),transparent 70%),#120C08;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 body.travado{overflow:hidden}
@@ -108,6 +108,17 @@ h3.cat{font-family:var(--display);font-weight:600;font-size:1.25rem;margin:0;let
 footer{margin-top:28px;color:var(--muted);font-size:.82rem;text-align:center}
 .peca{font-size:.78rem;color:var(--accent);margin-top:6px}
 
+/* quentura: fotos aquecidas, brilho de fogão a lenha e brasas */
+.foto img,.hero-foto img,.midia img,.lista .mini{filter:saturate(1.12) sepia(.12) contrast(1.04) brightness(1.03)}
+.fogo{position:fixed;left:0;right:0;bottom:0;height:45vh;z-index:-1;pointer-events:none;
+  background:radial-gradient(70% 100% at 50% 110%,rgba(232,105,42,.30),rgba(208,138,66,.10) 45%,transparent 75%)}
+@media (prefers-reduced-motion:no-preference){.fogo{animation:chama 3.4s ease-in-out infinite alternate}@keyframes chama{0%{opacity:.65}35%{opacity:.95}60%{opacity:.75}100%{opacity:1}}}
+#brasas{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;width:max-content;max-width:100%;font-size:.68rem;color:var(--accent-ink);
+  background:linear-gradient(90deg,var(--brasa),var(--accent-hi));padding:5px 12px;border-radius:999px;font-family:var(--display);font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.xadrez{height:14px;border-radius:4px;opacity:.55;width:min(320px,80%);
+  background:repeating-conic-gradient(var(--accent) 0 25%,transparent 0 50%) 0 0/14px 14px}
+.hero{box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 80px rgba(232,105,42,.12)}
 /* faixa animada */
 .faixa{overflow:hidden;border:1px solid var(--line);background:var(--soft);margin:18px 0 4px;border-radius:12px}
 .faixa div{display:flex;gap:40px;width:max-content;padding:9px 0;font-family:var(--display);font-weight:600;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-hi);white-space:nowrap}
@@ -188,10 +199,13 @@ footer{margin-top:28px;color:var(--muted);font-size:.82rem;text-align:center}
 
 </head>
 <body>
+<div class="fogo" aria-hidden="true"></div>
+<canvas id="brasas" aria-hidden="true"></canvas>
 <div class="wrap">
   <header class="hero">
     <div class="hero-txt">
       <img src="logo-nice-cafe.png" alt="NICE CAFÉ" width="800" height="577">
+      <span class="eyebrow">🔥 Comida mineira de verdade</span>
       <p class="slogan caps">Sabor de verdade,<br>no conforto da <em>sua casa.</em></p>
       <div class="regua"></div>
       <div class="dlv">
@@ -215,9 +229,10 @@ footer{margin-top:28px;color:var(--muted);font-size:.82rem;text-align:center}
   <main id="cardapio"></main>
 
   <div class="contato">
-    <span class="caps">Bateu a fome?</span>
+    <div class="xadrez" aria-hidden="true"></div>
+    <span class="caps">Uai, bateu a fome?</span>
     <a class="cta" id="cta-zap-2" target="_blank" rel="noopener"></a>
-    <span class="caps peca">Peça já o seu!</span>
+    <span class="caps peca">Pede aí, sô! Chega quentinho.</span>
   </div>
   <footer>Fotos dos pratos criadas para divulgação. Consulte a equipe sobre alergias e restrições.</footer>
 </div>
@@ -243,7 +258,7 @@ const LOJA = {
 };
 const CARDAPIO = [
   {
-    id:"macarrao", nome:"Macarrão", formato:"Pote de 500 g", descricao:"Massa feita na hora, servida no pote de 500 g.",
+    id:"macarrao", nome:"Macarrão", formato:"Pote de 500 g", descricao:"Massa feita na hora, no capricho mineiro, e entregue quentinha no pote de 500 g.",
     pratos:[
       { id:"carbonara",   nome:"Carbonara",        desc:"Massa com bacon crocante, gema, parmesão e pimenta-do-reino.", preco:null, foto:"prato-carbonara.jpg", selo:"🔥 Destaque" },
       { id:"amatriciana", nome:"All'Amatriciana",  desc:"Molho de tomate com bacon, cebola, um toque de pimenta e queijo ralado.", preco:null, foto:"prato-amatriciana.jpg" },
@@ -251,7 +266,7 @@ const CARDAPIO = [
     ]
   },
   {
-    id:"arroz", nome:"Arroz", descricao:"Arroz para matar a fome de verdade.",
+    id:"arroz", nome:"Arroz", descricao:"Arroz caprichado, daqueles de comer rezando.",
     pratos:[
       { id:"biro-biro", nome:"Arroz Biro Biro", desc:"Arroz com bacon, ovos, cebola, batata palha e cheiro-verde.", preco:null, foto:"prato-biro-biro.jpg" }
     ]
@@ -372,9 +387,23 @@ const SAUDACAO="Olá, NICE CAFÉ! Vim pelo cardápio digital e quero fazer um pe
 const cta=document.getElementById("cta-zap");cta.href=zapLink(LOJA.whatsapp[0],SAUDACAO);cta.innerHTML=ZAP_ICO+"Peça agora no WhatsApp";
 const cta2=document.getElementById("cta-zap-2");cta2.href=cta.href;cta2.innerHTML=ZAP_ICO+"Pedir pelo WhatsApp";
 const fab=document.getElementById("fab");fab.href=cta.href;fab.innerHTML=ZAP_ICO;
-const itensFaixa=["🔥 Delivery <b>segunda, quarta e sexta</b>","Das <b>16h às 23h</b>","Macarrão no <b>pote de 500 g</b>","<b>Carbonara</b> · <b>Amatriciana</b> · <b>Alfredo</b> · <b>Biro Biro</b>","Peça pelo <b>WhatsApp</b>"];
+const itensFaixa=["🔥 Delivery <b>segunda, quarta e sexta</b>","Das <b>16h às 23h</b>","Macarrão no <b>pote de 500 g</b>","<b>Carbonara</b> · <b>Amatriciana</b> · <b>Alfredo</b> · <b>Biro Biro</b>","Feito no <b>capricho mineiro</b>","Chega <b>quentinho</b> na sua casa","Peça pelo <b>WhatsApp</b>"];
 document.getElementById("faixa").innerHTML=[...itensFaixa,...itensFaixa].map(t=>`<span>${t}</span>`).join("");
 atualizar();
+
+/* ---------- brasas subindo ---------- */
+(function(){
+  const cv=document.getElementById("brasas");if(!cv||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const ctx=cv.getContext("2d");let W,H,dpr;const N=46,P=[];
+  const tam=()=>{dpr=Math.min(2,devicePixelRatio||1);W=cv.width=innerWidth*dpr;H=cv.height=innerHeight*dpr};tam();addEventListener("resize",tam);
+  const nova=(y)=>({x:Math.random()*W,y:y??H+Math.random()*H*.3,r:(Math.random()*1.8+.6)*dpr,v:(Math.random()*.5+.25)*dpr,o:Math.random()*Math.PI*2,a:Math.random()*.6+.35,h:20+Math.random()*25});
+  for(let i=0;i<N;i++)P.push(nova(Math.random()*H));
+  (function loop(t){ctx.clearRect(0,0,W,H);
+    for(const p of P){p.y-=p.v;p.x+=Math.sin(t/900+p.o)*.35*dpr;const vida=Math.max(0,Math.min(1,p.y/H*1.4));
+      ctx.beginPath();ctx.fillStyle=`hsla(${p.h},95%,60%,${p.a*vida})`;ctx.shadowColor=`hsla(${p.h},100%,55%,${.8*vida})`;ctx.shadowBlur=8*dpr;ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();
+      if(p.y<-10)Object.assign(p,nova())}
+    requestAnimationFrame(loop)})(0);
+})();
 </script>
 
 </body>
